@@ -1,6 +1,5 @@
 require "mkmf"
 
-# abort "missing openssl()" unless have_func "malloc"
-# abort "missing Openssl::()"   unless have_func "free"
+abort "missing stdint.h header" unless have_header("stdint.h")
 
 create_makefile "scrypt/scrypt"

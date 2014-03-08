@@ -13,10 +13,9 @@ class ScryptTest < MiniTest::Unit::TestCase
     assert_equal output_hex, Scrypt.hash_hex(input_hex)
     assert_equal output_bin, Scrypt.hash_bin(input_bin)
     
-    refute_equal output_hex, Scrypt.hash_bin(input_hex)
-    refute_equal output_bin, Scrypt.hash_bin(input_hex)
-    refute_equal output_bin, Scrypt.hash_bin("toto")
-    
+    assert_raises ArgumentError do
+      Scrypt.hash_bin("toto")
+    end
     assert_raises ArgumentError do
       Scrypt.hash_hex("toto")
     end
