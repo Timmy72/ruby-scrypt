@@ -30,11 +30,18 @@
 // * StringValuePtr converts a Ruby String object to a C char *
 static VALUE method_scrypt_hash_bin(VALUE mod, VALUE payload) {
   char output[32];
+  unsigned char i, tmp;
   Check_Type(payload, T_STRING);
   if (RSTRING_LEN(payload) != 80)
     rb_raise(rb_eArgError, "Invalid argument : wait a 80 length binary string. %ld", RSTRING_LEN(payload));
 
   scrypt_1024_1_1_256(StringValuePtr(payload), output);
+  // reverse output
+  for (i = 0 ; i < 16; i++) {
+    tmp = output[i];
+    output[i] = output[31-i];
+    output[31-i] = tmp;
+  }
   return rb_str_new(output, 32);
 }
 
